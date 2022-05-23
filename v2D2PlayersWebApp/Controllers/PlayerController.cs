@@ -64,6 +64,23 @@ namespace WEB_API.Controllers
 
         }
 
+        [HttpGet]
+        [Route("[action]")]
+
+        public async Task<IActionResult> GetPlayersByTeamId(int id)
+        {
+            var result = await _player_Service.GetPlayersByTeamId(id);
+            switch (result.success)
+            {
+                case true:
+                    return Ok(result);
+
+                case false:
+                    return StatusCode(500, result);
+            }
+
+        }
+
         [HttpPost]
         [Route("[action]")]
 

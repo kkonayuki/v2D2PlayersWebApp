@@ -129,6 +129,44 @@ namespace LOGIC.Services.Implementation
             return result;
         }
 
+        public async Task<Generic_ResultSet<List<Player_ResultSet>>> GetPlayersByTeamId(int id)
+        {
+            Generic_ResultSet<List<Player_ResultSet>> result = new Generic_ResultSet<List<Player_ResultSet>>();
+            try
+            {
+                List<Player> Players = await _crud.ReadPlayersByTeam(id);
+                result.result_set = new List<Player_ResultSet>();
+
+                Players.ForEach(pg => {
+                    result.result_set.Add(new Player_ResultSet
+                    {
+                        id = pg.Id,
+                        firstName = pg.FirstName,
+                        lastName = pg.LastName,
+                        nickName = pg.NickName,
+                        age = pg.Age,
+                        prizeMoney = pg.PrizeMoney,
+                        teamId = pg.TeamId,
+                        countryId = pg.CountryId
+                    });
+                });
+
+                result.userMessage = String.Format("All players obtained successfully");
+                result.internalMessage = "LOGIC.Services.Implementation.Player_Service: GetAllPlayers() method executed successfuly.";
+                result.success = true;
+
+
+
+            }
+            catch (Exception exception)
+            {
+                result.exception = exception;
+                result.userMessage = "We failed fetch all the required players from the database";
+                result.internalMessage = String.Format("ERROR: LOGIC.Services.Implementation.Player_Service: GetAllPlayers(): {0}", exception.Message);
+            }
+            return result;
+        }
+
         public async Task<Generic_ResultSet<Player_ResultSet>> UpdatePlayer(int id, string firstName, string lastName, string nickName, int age, int? teamId, int countryId, decimal? prizeMoney)
         {
             Generic_ResultSet<Player_ResultSet> result = new Generic_ResultSet<Player_ResultSet>();

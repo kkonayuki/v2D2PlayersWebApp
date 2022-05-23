@@ -1,4 +1,5 @@
 ﻿using DAL.DataContext;
+using DAL.Entities;
 using DAL.Functions.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -78,6 +79,21 @@ namespace DAL.Functions.Crud
             }
         }
 
+        public async Task<List<Player>> ReadPlayersByTeam(int entityId)
+        {
+            try
+            {
+                using (var context = new DatabaseContext(DatabaseContext.Options.DatabaseOptions))
+                {
+                    var result = await context.Players.Where(p=>p.TeamId == entityId).ToListAsync();
+                    return result;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         public async Task<T> Update<T>(T objectToUpdate, int entityId) where T : class
         {

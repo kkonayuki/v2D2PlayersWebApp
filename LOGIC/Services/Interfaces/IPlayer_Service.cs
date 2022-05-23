@@ -16,6 +16,7 @@ namespace LOGIC.Services.Interfaces
         Task<Generic_ResultSet<Player_ResultSet>> AddPlayer(string firstName, string lastName, string nickName, int age, int? teamId, int countryId, decimal? prizeMoney);
         Task<Generic_ResultSet<List<Player_ResultSet>>> GetAllPlayers();
         Task<Generic_ResultSet<Player_ResultSet>> GetPlayerById(int id);
+        Task<Generic_ResultSet<List<Player_ResultSet>>> GetPlayersByTeamId(int id);
         Task<Generic_ResultSet<Player_ResultSet>> UpdatePlayer(int id, string firstName, string lastName, string nickName, int age, int? teamId, int countryId, decimal? prizeMoney);
     }
 }
